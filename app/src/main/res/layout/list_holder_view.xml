@@ -25,11 +25,9 @@
         android:textSize="20sp"
 
         android:id="@+id/textView3"
-        android:layout_marginRight="20dp"
         android:layout_alignBottom="@+id/textWork"
         android:layout_toLeftOf="@+id/imageButton3"
-        android:layout_toStartOf="@+id/imageButton3"
-         />
+        android:layout_toStartOf="@+id/imageButton3" />
 
     <ImageButton
 

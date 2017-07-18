@@ -14,16 +14,14 @@ import java.util.List;
 
 public class ItemAdaptor  extends RecyclerView.Adapter<ItemAdaptor.ViewHolder> {
     private List<ItemData> itemDatas;
-    public ItemAdaptor(List<ItemData>itemDatas){this.itemDatas=itemDatas;}
+    public ItemAdaptor(List<ItemData> itemDatas) {this.itemDatas = itemDatas;}
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemLayout= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_holder_view,null);
-        ViewHolder viewHolder=new ViewHolder(itemLayout);
+        View itemLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_holder_view, null);
+        ViewHolder viewHolder = new ViewHolder(itemLayout);
         return viewHolder;
     }
-
-
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -35,13 +33,12 @@ public class ItemAdaptor  extends RecyclerView.Adapter<ItemAdaptor.ViewHolder> {
         return itemDatas.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
-        public ViewHolder(View itemLayout){
+
+        public ViewHolder(View itemLayout) {
             super(itemLayout);
-            textView=(TextView)itemLayout.findViewById(R.id.textWork);
-
+            textView = (TextView) itemLayout.findViewById(R.id.textWork);
         }
-
-
-    }}
+    }
+}

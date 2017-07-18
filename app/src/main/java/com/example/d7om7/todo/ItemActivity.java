@@ -14,11 +14,11 @@ public class ItemActivity extends AppCompatActivity {
     Module module = new Module();
     EditText AddItemEditText ;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
         AddItemEditText = (EditText) findViewById(R.id.AddItemEditText);
-        module.initilaiz(this);
+      //  module.initilaiz(this);
     }
 
     public  void AddItemButton (View view){
