@@ -7,18 +7,19 @@ import android.widget.EditText;
 
 public class ListActivity extends AppCompatActivity {
     Module module=new Module();
-    EditText texy;
+    EditText AddListEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        texy=(EditText)findViewById(R.id.AddListEditText);
+       AddListEditText=(EditText)findViewById(R.id.AddListEditText);
         module.initilaiz(this);
  }
 
     public  void AddListButton (View view){
 
-     module.addListTODO(texy,this);
+     module.addListTODO(AddListEditText,this);
+        setContentView(R.layout.activity_item);
    }
 
   }

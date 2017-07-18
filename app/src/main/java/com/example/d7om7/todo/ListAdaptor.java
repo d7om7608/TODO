@@ -12,9 +12,9 @@ import java.util.List;
  * Created by d7om7 on 7/17/2017.
  */
 
-public  class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public  class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
     private List<ItemData> itemDatas;
-    public  MyAdapter(List<ItemData>itemDatas){this.itemDatas=itemDatas;}
+    public ListAdaptor(List<ItemData>itemDatas){this.itemDatas=itemDatas;}
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
