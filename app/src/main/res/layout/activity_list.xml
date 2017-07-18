@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/Edit"
+        android:id="@+id/AddListEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="List Name"
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add"
-        android:onClick="onClick"
+        android:onClick="AddListButton"
         android:textSize="24sp" />
     />
 
