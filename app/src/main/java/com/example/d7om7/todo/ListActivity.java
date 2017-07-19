@@ -10,6 +10,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,6 +47,8 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
 
+
+
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 
@@ -62,6 +67,23 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         }).attachToRecyclerView(recyclerView);
  }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.list_avtivity_mnue,menu);
+        return true;}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id= item.getItemId();
+        if(id==R.id.action_settings){
+            Intent startSettingsActivity=new Intent(this,SettingsActivity.class);
+            startActivity(startSettingsActivity);
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     public  void AddListButton (View view){
