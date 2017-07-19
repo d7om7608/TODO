@@ -3,11 +3,13 @@ package com.example.d7om7.todo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,7 +33,7 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         setContentView(R.layout.activity_list);
         AddListEditText=(EditText)findViewById(R.id.AddListEditText);
 
-
+        Cursor cursor ;
 
 
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
@@ -40,7 +42,27 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         recyclerView.setAdapter(myAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+//                long id = (long) viewHolder.itemView.getTag();
+//            mAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
+
+                myAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
+                 itemData.remove(viewHolder.getLayoutPosition());
+            }
+
+        }).attachToRecyclerView(recyclerView);
  }
+
+
 
     public  void AddListButton (View view){
 
@@ -62,4 +84,5 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         startActivity(startChildActivityIntent);
 
     }
+
 }
