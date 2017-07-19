@@ -10,9 +10,10 @@ import android.widget.TextView;
 import java.util.List;
 
 public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
-    private List<ItemData> itemDatas;
+
+    private List<TodoList> itemDatas;
     changeActivity change ;
-    public ListAdaptor(List<ItemData> itemDatas , changeActivity context) {
+    public ListAdaptor(List<TodoList> itemDatas , changeActivity context) {
         this.itemDatas = itemDatas;
         change = context;
     }

@@ -6,12 +6,12 @@ import java.util.List;
  * Created by d7om7 on 7/17/2017.
  */
 
-public class ItemData {
+public class TodoList {
     public String title;
-    static List<ItemData>helloo;
-    public ItemData(String title, List<ItemData>hello){
+    public List<TodoItem>items;
+    public TodoList(String title, List<TodoItem>items){
         this.title=title;
-        helloo=hello;
+        this.items=items;
 
     }
 }
