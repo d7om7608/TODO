@@ -41,7 +41,7 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
     public  void AddItemButton (View view){
 
         if (!AddItemEditText.getText().toString().equals("")) {
-            itemData.add(new ItemData(AddItemEditText.getText().toString()));
+            itemData.add(new ItemData(AddItemEditText.getText().toString(),null));
             myAdapter.notifyDataSetChanged();
             AddItemEditText.setText("");
         }

@@ -8,10 +8,10 @@ import java.util.List;
 
 public class ItemData {
     public String title;
-   // List<ItemData>helloo;
-    public ItemData(String title/*, List<ItemData>hello*/){
+    static List<ItemData>helloo;
+    public ItemData(String title, List<ItemData>hello){
         this.title=title;
-      //  helloo=hello;
+        helloo=hello;
 
     }
 }
