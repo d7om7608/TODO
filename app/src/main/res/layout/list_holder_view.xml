@@ -8,17 +8,21 @@
 
     <TextView
         android:padding="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:textSize="25sp"
         android:id="@+id/textWork"
         android:textColor="#311B92"
         android:layout_weight="2"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3" />
 
     <TextView
         android:padding="10dp"
-
+        android:text="3/4"
         android:textColor="#311B92"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,14 +33,6 @@
         android:layout_toLeftOf="@+id/imageButton3"
         android:layout_toStartOf="@+id/imageButton3" />
 
-    <ImageButton
 
-        android:id="@+id/imageButton3"
-        android:layout_width="44dp"
-        android:layout_height="40dp"
-        app:srcCompat="@android:drawable/ic_menu_send"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/textView3" />
 
 </RelativeLayout>

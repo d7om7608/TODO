@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public class ItemAdaptor  extends RecyclerView.Adapter<ItemAdaptor.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_holder_view, null);
+        View itemLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_holder_view, null);
         ViewHolder viewHolder = new ViewHolder(itemLayout);
         return viewHolder;
     }
@@ -26,6 +25,7 @@ public class ItemAdaptor  extends RecyclerView.Adapter<ItemAdaptor.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.textView.setText(itemDatas.get(position).title);
+
     }
 
     @Override

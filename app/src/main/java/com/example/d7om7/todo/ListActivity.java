@@ -24,12 +24,11 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
     List<ItemData> itemData=new ArrayList<>();
     ListAdaptor myAdapter;
     EditText AddListEditText;
-    ImageButton imageButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        imageButton = (ImageButton) findViewById(R.id.imageButton3);
         AddListEditText=(EditText)findViewById(R.id.AddListEditText);
 
 

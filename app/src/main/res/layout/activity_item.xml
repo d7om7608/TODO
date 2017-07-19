@@ -17,7 +17,7 @@
         android:text="Add"
         android:onClick="AddItemButton"
         android:textSize="24sp" />
-    />
+
 
     <android.support.v7.widget.RecyclerView
         android:layout_margin="16dp"
