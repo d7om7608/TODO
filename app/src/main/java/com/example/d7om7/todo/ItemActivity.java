@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,9 @@ import static com.example.d7om7.todo.TodoManager.todoLists;
 
 public class ItemActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
     EditText AddItemEditText ;
+//    SettingsActivity settingsActivity = new SettingsActivity() ;
     int position;
-
+    LinearLayout Itembackground ;
     ItemAdaptor myAdapter;
 
     @Override
@@ -28,7 +30,10 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
         position= getIntent().getIntExtra("position",0);
+
         AddItemEditText = (EditText) findViewById(R.id.AddItemEditText);
+        Itembackground = (LinearLayout) findViewById(R.id.background);
+//        settingsActivity.colorSpinner(Itembackground);
 
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

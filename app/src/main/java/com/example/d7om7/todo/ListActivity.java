@@ -14,26 +14,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-
+import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.settingsActivity;
 import static com.example.d7om7.todo.TodoManager.todoLists;
 
 public class ListActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
-
+//    SettingsActivity.
     ListAdaptor myAdapter;
     EditText AddListEditText;
-
+    LinearLayout Listbackground ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_list);
-        AddListEditText=(EditText)findViewById(R.id.AddListEditText);
-        Cursor cursor ;
 
+        AddListEditText=(EditText)findViewById(R.id.AddListEditText);
+        Listbackground = (LinearLayout) findViewById(R.id.background);
+
+//        int color = getResources().getColor(R.color.Blue);
+//        Listbackground.setBackgroundColor(color);
+//        settingsActivity.colorSpinner(Listbackground,settingsActivity.BackGroundColorSpinner);
 
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
