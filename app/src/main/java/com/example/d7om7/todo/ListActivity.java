@@ -15,14 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
-
 import static android.R.attr.settingsActivity;
 import static com.example.d7om7.todo.TodoManager.todoLists;
 
 public class ListActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
-//    SettingsActivity.
+//    ChangeColor changeColor = new ChangeColor();
+    TextView ListNumbersTextView ;
+    ItemActivity itemActivity = new ItemActivity() ;
     ListAdaptor myAdapter;
     EditText AddListEditText;
     LinearLayout Listbackground ;
@@ -32,8 +35,12 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+
+
+        ListNumbersTextView = (TextView) findViewById(R.id.List_number_TextView);
         AddListEditText=(EditText)findViewById(R.id.AddListEditText);
         Listbackground = (LinearLayout) findViewById(R.id.background);
+//        changeColor.colorSpinner(Listbackground);
 
 //        int color = getResources().getColor(R.color.Blue);
 //        Listbackground.setBackgroundColor(color);
@@ -57,8 +64,6 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//                long id = (long) viewHolder.itemView.getTag();
-//            mAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
 
                 myAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
                 todoLists.remove(viewHolder.getLayoutPosition());
@@ -94,7 +99,8 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         if (!AddListEditText.getText().toString().equals("")) {
             todoLists.add(new TodoList(AddListEditText.getText().toString(),new ArrayList<TodoItem>()));
             myAdapter.notifyDataSetChanged();
-
+            String mItemNumbers = "45";
+            //ListNumbersTextView.setText("45");
             AddListEditText.setText("");
         }
 
