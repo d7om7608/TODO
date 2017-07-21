@@ -38,19 +38,20 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
 
         BackGroundColorSpinner = (Spinner) findViewById(Back_Ground_Color_Spinner);
-        ArrayAdapter<String> ColorAdapter;
-        List<String> ColorList;
-        ColorList = new ArrayList<String>();
-        ColorList.add("White");
-        ColorList.add("Blue");
-        ColorList.add("Gray");
-        ColorList.add("Yellow");
-        ColorList.add("Red");
-        ColorList.add("Green");
-        ColorAdapter = new ArrayAdapter<String>(getApplicationContext(),
-        android.R.layout.simple_spinner_item, list);
-        ColorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        BackGroundColorSpinner.setAdapter(ColorAdapter);
+        
+        ArrayAdapter<String> adapter;
+        List<String> list;
+        list = new ArrayList<String>();
+        list.add("White");
+        list.add("Blue");
+        list.add("Gray");
+        list.add("Yellow");
+        list.add("Red");
+        list.add("Green");
+        adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        BackGroundColorSpinner.setAdapter(adapter);
 
 
         ActionBar actionBar=this.getSupportActionBar();
