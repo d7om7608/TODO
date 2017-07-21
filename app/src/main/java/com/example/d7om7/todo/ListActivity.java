@@ -23,7 +23,6 @@ import static android.R.attr.settingsActivity;
 import static com.example.d7om7.todo.TodoManager.todoLists;
 
 public class ListActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
-//    ChangeColor changeColor = new ChangeColor();
     TextView ListNumbersTextView ;
     ItemActivity itemActivity = new ItemActivity() ;
     ListAdaptor myAdapter;
@@ -40,7 +39,6 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         ListNumbersTextView = (TextView) findViewById(R.id.List_number_TextView);
         AddListEditText=(EditText)findViewById(R.id.AddListEditText);
         Listbackground = (LinearLayout) findViewById(R.id.background);
-//        changeColor.colorSpinner(Listbackground);
 
 //        int color = getResources().getColor(R.color.Blue);
 //        Listbackground.setBackgroundColor(color);
