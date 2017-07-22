@@ -34,6 +34,7 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.textView.setText(itemDatas.get(position).title);
+        holder.itemView.setTag(itemDatas.get(position).id);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

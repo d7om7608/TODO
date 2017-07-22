@@ -7,9 +7,15 @@ package com.example.d7om7.todo;
 public class TodoItem {
     String title;
     boolean check;
+    int id;
     public TodoItem(String s, boolean b){
         title=s;
         check=b;
+
+    }public TodoItem(String s, boolean b,int id){
+        title=s;
+        check=b;
+        this.id=id;
 
     }
 }

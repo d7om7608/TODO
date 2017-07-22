@@ -2,6 +2,7 @@ package com.example.d7om7.todo;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,6 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
+import com.example.d7om7.todo.Data.TodoCantract;
+import com.example.d7om7.todo.Data.TodoDBHelper;
+import com.example.d7om7.todo.Data.TodoHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +32,9 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
     ListAdaptor myAdapter;
     EditText AddListEditText;
     LinearLayout Listbackground ;
+    SQLiteDatabase mdb;
+    TodoDBHelper helper=new TodoDBHelper(this);
+    static int idOfTodoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -34,13 +43,9 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
         AddListEditText=(EditText)findViewById(R.id.AddListEditText);
         Listbackground = (LinearLayout) findViewById(R.id.background);
-
-//        int color = getResources().getColor(R.color.Blue);
-//        Listbackground.setBackgroundColor(color);
-//        settingsActivity.colorSpinner(Listbackground,settingsActivity.BackGroundColorSpinner);
-
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        getAllTODO();
         myAdapter=new ListAdaptor(todoLists,this);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -62,11 +67,26 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
                 myAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
                 todoLists.remove(viewHolder.getLayoutPosition());
+                mdb=helper.getWritableDatabase();
+                TodoHandler.removeTODO(mdb,(Integer)viewHolder.itemView.getTag());
+
                 myAdapter.notifyDataSetChanged();
 
             }
 
         }).attachToRecyclerView(recyclerView);
+ }
+
+ private void getAllTODO(){
+     mdb=helper.getReadableDatabase();
+     Cursor cursor=TodoHandler.cursor(mdb);
+     for(int i=0;i<cursor.getCount();i++){
+         cursor.moveToPosition(i);
+      String title=cursor.getString(cursor.getColumnIndex(TodoCantract.TodoEntry.TODO_NAME));
+         int id =cursor.getInt(cursor.getColumnIndex(TodoCantract.TodoEntry.TODO_ID));
+         todoLists.add(new TodoList(title,new ArrayList<TodoItem>(),id));
+
+     }
  }
 
     @Override
@@ -94,6 +114,9 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         if (!AddListEditText.getText().toString().equals("")) {
             todoLists.add(new TodoList(AddListEditText.getText().toString(),new ArrayList<TodoItem>()));
             myAdapter.notifyDataSetChanged();
+            mdb = helper.getWritableDatabase();
+            int i= TodoHandler.addNewTodo(mdb,AddListEditText.getText().toString());
+
 
             AddListEditText.setText("");
         }
@@ -103,9 +126,12 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
     @Override
     public void Clicked(int position) {
+        idOfTodoList=todoLists.indexOf(position);
+
         Intent startChildActivityIntent = new Intent(this, ItemActivity.class);
         startChildActivityIntent.putExtra("position", position);
         startActivity(startChildActivityIntent);
+
 
     }
 
