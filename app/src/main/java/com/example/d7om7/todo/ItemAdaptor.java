@@ -29,6 +29,8 @@ public class ItemAdaptor  extends RecyclerView.Adapter<ItemAdaptor.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.textView.setText(itemDatas.get(position).title);
         holder.itemView.setTag(itemDatas.get(position).id);
+        holder.itemView.setTag(itemDatas.get(position).check);
+
 
     }
 

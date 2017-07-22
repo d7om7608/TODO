@@ -23,6 +23,7 @@
         android:layout_alignBottom="@+id/textWork"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:onClick="check"
         android:text="Done" />
 
 

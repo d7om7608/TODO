@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -24,6 +25,8 @@ import java.util.List;
 
 import static com.example.d7om7.todo.ListActivity.idOfTodoList;
 import static com.example.d7om7.todo.R.id.AddListEditText;
+import static com.example.d7om7.todo.R.id.checkBox;
+import static com.example.d7om7.todo.R.id.checkbox;
 import static com.example.d7om7.todo.TodoManager.todoLists;
 
 /**
@@ -32,24 +35,25 @@ import static com.example.d7om7.todo.TodoManager.todoLists;
 
 public class ItemActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
     EditText AddItemEditText ;
+    CheckBox checkbox;
 //    SettingsActivity settingsActivity = new SettingsActivity() ;
     int position;
     SQLiteDatabase mdb;
     TodoDBHelper helper=new TodoDBHelper(this);
     LinearLayout Itembackground ;
     ItemAdaptor myAdapter;
-    public int ItemNumbers = 0 ;
-
+    RecyclerView.ViewHolder helpme;
+    static int  ItemNumbers =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
-
         position= getIntent().getIntExtra("position",0);
         AddItemEditText = (EditText) findViewById(R.id.AddItemEditText);
         Itembackground = (LinearLayout) findViewById(R.id.background);
+
         getAllTODO();
 
 //        settingsActivity.colorSpinner(Itembackground);
@@ -77,13 +81,19 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//                long id = (long) viewHolder.itemView.getTag();
-//            mAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
 
                 myAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
                 todoLists.get(position).items.remove(viewHolder.getLayoutPosition());
                 mdb=helper.getWritableDatabase();
+                checkbox=(CheckBox) viewHolder.itemView.findViewById(R.id.checkBox);
                 ItemHandler.removeItem(mdb,(Integer)viewHolder.itemView.getTag());
+
+                if (checkbox.isChecked()){
+                    ItemNumbers--;
+                    checkbox.setChecked(false);
+                    Log.d("hello",ItemNumbers+"");
+
+                }
 
             }
 
@@ -96,15 +106,16 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
     }
 
     private void getAllTODO() {
+
     mdb=helper.getReadableDatabase();
         Cursor cursor = ItemHandler.cursorItem(mdb);
+
         for(int i=0;i<cursor.getCount();i++){
             cursor.moveToPosition(i);
             String title=cursor.getString(cursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_NAME));
             int id =cursor.getInt(cursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_ID));
             todoLists.get(position).items.add(new TodoItem(title,true,id));
-
-        }
+            }
 
     }
 
@@ -114,11 +125,11 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
             todoLists.get(position).items.add(new TodoItem(AddItemEditText.getText().toString(),true));
             myAdapter.notifyDataSetChanged();
             mdb = helper.getWritableDatabase();
-            int i= ItemHandler.addNewItem(mdb,AddItemEditText.getText().toString(),position);
-            Log.d("hello",i+"");
+            ItemHandler.addNewItem(mdb,AddItemEditText.getText().toString(),position);
+
 
             AddItemEditText.setText("");
-            ItemNumbers = ItemNumbers + 1 ;
+
         }
     }
 
@@ -127,6 +138,26 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
         Intent startChildActivityIntent = new Intent(this, ListActivity.class);
         startChildActivityIntent.putExtra("position", position);
         startActivity(startChildActivityIntent);
+
+    }
+    public void check(View view){
+        checkbox=(CheckBox) view.findViewById(R.id.checkBox);
+
+        if (checkbox.isChecked()){
+            checkbox=(CheckBox)findViewById(R.id.checkBox);
+
+          ItemNumbers ++;
+           Log.d("hello",ItemNumbers+"");
+
+
+      }else{
+            checkbox=(CheckBox)findViewById(R.id.checkBox);
+
+        ItemNumbers -- ;
+          Log.d("hello",ItemNumbers+"");
+
+       }
+
 
     }
 }

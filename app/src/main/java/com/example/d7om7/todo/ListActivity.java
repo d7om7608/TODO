@@ -28,9 +28,13 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 import static android.R.attr.settingsActivity;
+import static com.example.d7om7.todo.ItemActivity.ItemNumbers;
+import static com.example.d7om7.todo.R.id.List_number_TttextView;
 import static com.example.d7om7.todo.TodoManager.todoLists;
 
 public class ListActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
+    TextView List_number_TextView;
+
     TextView ListNumbersTextView ;
     ItemActivity itemActivity = new ItemActivity() ;
     ListAdaptor myAdapter;
@@ -47,7 +51,7 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
 
 
-        ListNumbersTextView = (TextView) findViewById(R.id.List_number_TextView);
+        ListNumbersTextView = (TextView) findViewById(R.id.List_number_TttextView);
         AddListEditText=(EditText)findViewById(R.id.AddListEditText);
         Listbackground = (LinearLayout) findViewById(R.id.background);
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
@@ -90,7 +94,6 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
       String title=cursor.getString(cursor.getColumnIndex(TodoCantract.TodoEntry.TODO_NAME));
          int id =cursor.getInt(cursor.getColumnIndex(TodoCantract.TodoEntry.TODO_ID));
          todoLists.add(new TodoList(title,new ArrayList<TodoItem>(),id));
-
      }
  }
 
@@ -119,6 +122,7 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         if (!AddListEditText.getText().toString().equals("")) {
             todoLists.add(new TodoList(AddListEditText.getText().toString(),new ArrayList<TodoItem>()));
             myAdapter.notifyDataSetChanged();
+
             mdb = helper.getWritableDatabase();
             int i= TodoHandler.addNewTodo(mdb,AddListEditText.getText().toString());
 
