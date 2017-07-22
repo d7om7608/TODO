@@ -2,6 +2,7 @@ package com.example.d7om7.todo;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -37,16 +38,22 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
     TodoDBHelper helper=new TodoDBHelper(this);
     LinearLayout Itembackground ;
     ItemAdaptor myAdapter;
+    public int ItemNumbers = 0 ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
-        position= getIntent().getIntExtra("position",0);
 
+        position= getIntent().getIntExtra("position",0);
         AddItemEditText = (EditText) findViewById(R.id.AddItemEditText);
         Itembackground = (LinearLayout) findViewById(R.id.background);
         getAllTODO();
+
+//        settingsActivity.colorSpinner(Itembackground);
+
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         myAdapter=new ItemAdaptor(todoLists.get(position).items);
@@ -58,6 +65,7 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
 
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+
 
 
 
@@ -76,8 +84,6 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
                 todoLists.get(position).items.remove(viewHolder.getLayoutPosition());
                 mdb=helper.getWritableDatabase();
                 ItemHandler.removeItem(mdb,(Integer)viewHolder.itemView.getTag());
-
-                myAdapter.notifyDataSetChanged();
 
             }
 
@@ -112,11 +118,15 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
             Log.d("hello",i+"");
 
             AddItemEditText.setText("");
+            ItemNumbers = ItemNumbers + 1 ;
         }
     }
 
     @Override
     public void Clicked(int position) {
+        Intent startChildActivityIntent = new Intent(this, ListActivity.class);
+        startChildActivityIntent.putExtra("position", position);
+        startActivity(startChildActivityIntent);
 
     }
 }

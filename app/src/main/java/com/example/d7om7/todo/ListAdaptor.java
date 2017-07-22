@@ -33,8 +33,12 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.textView.setText(itemDatas.get(position).title);
+
+     //   holder.textView.setText(itemDatas.get(position).title);
         holder.itemView.setTag(itemDatas.get(position).id);
+
+        holder.ListTextView.setText(itemDatas.get(position).title);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,11 +53,11 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
+        public TextView ListTextView;
 
         public ViewHolder(View itemLayout) {
             super(itemLayout);
-            textView = (TextView) itemLayout.findViewById(R.id.textWork);
+            ListTextView = (TextView) itemLayout.findViewById(R.id.list_textview);
         }
     }
 }

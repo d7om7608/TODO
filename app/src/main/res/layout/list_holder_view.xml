@@ -11,14 +11,13 @@
         android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:id="@+id/textWork"
+        android:id="@+id/list_textview"
         android:textColor="#311B92"
         android:layout_weight="2"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/textView3"
-        android:layout_toStartOf="@+id/textView3" />
+        android:layout_toStartOf="@+id/List_number_TextView" />
 
     <TextView
         android:padding="10dp"
@@ -27,23 +26,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-
-        android:id="@+id/textView3"
+        android:id="@+id/List_number_TextView"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="41dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:text="Button" />
+        android:layout_alignBottom="@+id/list_textview" />
+
 
 
 </RelativeLayout>

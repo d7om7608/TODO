@@ -13,7 +13,10 @@ import java.util.List;
 
 public class ItemAdaptor  extends RecyclerView.Adapter<ItemAdaptor.ViewHolder> {
     private List<TodoItem> itemDatas;
-    public ItemAdaptor(List<TodoItem> itemDatas) {this.itemDatas = itemDatas;}
+
+
+    public ItemAdaptor(List<TodoItem> itemDatas ) {this.itemDatas = itemDatas;}
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

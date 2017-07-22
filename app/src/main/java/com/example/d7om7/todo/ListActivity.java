@@ -17,18 +17,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+
 import com.example.d7om7.todo.Data.TodoCantract;
 import com.example.d7om7.todo.Data.TodoDBHelper;
 import com.example.d7om7.todo.Data.TodoHandler;
 
+
+import android.widget.TextView;
+import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
-
 import static android.R.attr.settingsActivity;
 import static com.example.d7om7.todo.TodoManager.todoLists;
 
 public class ListActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
-//    SettingsActivity.
+    TextView ListNumbersTextView ;
+    ItemActivity itemActivity = new ItemActivity() ;
     ListAdaptor myAdapter;
     EditText AddListEditText;
     LinearLayout Listbackground ;
@@ -41,6 +45,9 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+
+
+        ListNumbersTextView = (TextView) findViewById(R.id.List_number_TextView);
         AddListEditText=(EditText)findViewById(R.id.AddListEditText);
         Listbackground = (LinearLayout) findViewById(R.id.background);
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
@@ -62,8 +69,6 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//                long id = (long) viewHolder.itemView.getTag();
-//            mAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
 
                 myAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
                 todoLists.remove(viewHolder.getLayoutPosition());
@@ -118,6 +123,8 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
             int i= TodoHandler.addNewTodo(mdb,AddListEditText.getText().toString());
 
 
+         String mItemNumbers = "45";
+            //ListNumbersTextView.setText("45");
             AddListEditText.setText("");
         }
 
