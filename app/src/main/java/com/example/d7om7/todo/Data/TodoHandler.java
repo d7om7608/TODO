@@ -12,9 +12,9 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class TodoHandler {
 
-   public static int addNewTodo(SQLiteDatabase mDb,String categoryName){
+   public static int addNewTodo(SQLiteDatabase mDb,String TODOName){
        ContentValues cv=new ContentValues();
-       cv.put(TodoCantract.TodoEntry.TODO_NAME,categoryName);
+       cv.put(TodoCantract.TodoEntry.TODO_NAME,TODOName);
        return (int)mDb.insert(TodoCantract.TodoEntry.TABLE_NAME,null,cv);}
 
 

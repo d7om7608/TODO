@@ -10,11 +10,11 @@ public class TodoList {
     public String title;
     public List<TodoItem>items;
     public int id;
-    public TodoList(String title, List<TodoItem>items){
-        this.title=title;
-        this.items=items;
-
-    }
+//    public TodoList(String title, List<TodoItem>items){
+//        this.title=title;
+//        this.items=items;
+//
+//    }
     public TodoList(String title, List<TodoItem>items,int id){
         this.title=title;
         this.items=items;

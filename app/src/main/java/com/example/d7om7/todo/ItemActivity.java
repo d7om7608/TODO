@@ -23,6 +23,8 @@ import com.example.d7om7.todo.Data.TodoHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.description;
+import static android.R.attr.name;
 import static com.example.d7om7.todo.ListActivity.idOfTodoList;
 import static com.example.d7om7.todo.R.id.AddListEditText;
 import static com.example.d7om7.todo.R.id.checkBox;
@@ -39,8 +41,10 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
 //    SettingsActivity settingsActivity = new SettingsActivity() ;
     int position;
     SQLiteDatabase mdb;
+    TodoList todoList;
     TodoDBHelper helper=new TodoDBHelper(this);
     LinearLayout Itembackground ;
+
     ItemAdaptor myAdapter;
     RecyclerView.ViewHolder helpme;
     static int  ItemNumbers =0;
@@ -54,7 +58,6 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
         AddItemEditText = (EditText) findViewById(R.id.AddItemEditText);
         Itembackground = (LinearLayout) findViewById(R.id.background);
 
-        getAllTODO();
 
 //        settingsActivity.colorSpinner(Itembackground);
 
@@ -86,7 +89,7 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
                 todoLists.get(position).items.remove(viewHolder.getLayoutPosition());
                 mdb=helper.getWritableDatabase();
                 checkbox=(CheckBox) viewHolder.itemView.findViewById(R.id.checkBox);
-                ItemHandler.removeItem(mdb,(Integer)viewHolder.itemView.getTag());
+               ItemHandler.removeItem(mdb,(Integer)viewHolder.itemView.getTag());
 
                 if (checkbox.isChecked()){
                     ItemNumbers--;
@@ -105,26 +108,21 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
 
     }
 
-    private void getAllTODO() {
 
-    mdb=helper.getReadableDatabase();
-        Cursor cursor = ItemHandler.cursorItem(mdb);
-
-        for(int i=0;i<cursor.getCount();i++){
-            cursor.moveToPosition(i);
-            String title=cursor.getString(cursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_NAME));
-            int id =cursor.getInt(cursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_ID));
-            todoLists.get(position).items.add(new TodoItem(title,true,id));
-            }
-
-    }
 
         public  void AddItemButton (View view){
 
         if (!AddItemEditText.getText().toString().equals("")) {
-            todoLists.get(position).items.add(new TodoItem(AddItemEditText.getText().toString(),true));
-            myAdapter.notifyDataSetChanged();
             mdb = helper.getWritableDatabase();
+            String name =AddItemEditText.getText().toString();
+            int id = ItemHandler.addNewItem(mdb, name, todoLists.get(position).id);
+
+
+
+            todoLists.get(position)
+         .items.add(new TodoItem(name,true));
+            myAdapter.notifyDataSetChanged();
+
             ItemHandler.addNewItem(mdb,AddItemEditText.getText().toString(),position);
 
 
@@ -134,7 +132,7 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
     }
 
     @Override
-    public void Clicked(int position) {
+    public void Clicked(int position,int id) {
         Intent startChildActivityIntent = new Intent(this, ListActivity.class);
         startChildActivityIntent.putExtra("position", position);
         startActivity(startChildActivityIntent);

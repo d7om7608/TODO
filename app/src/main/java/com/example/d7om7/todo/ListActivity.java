@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 
+import com.example.d7om7.todo.Data.ItemHandler;
 import com.example.d7om7.todo.Data.TodoCantract;
 import com.example.d7om7.todo.Data.TodoDBHelper;
 import com.example.d7om7.todo.Data.TodoHandler;
@@ -34,14 +35,13 @@ import static com.example.d7om7.todo.TodoManager.todoLists;
 
 public class ListActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
     TextView List_number_TextView;
-
     TextView ListNumbersTextView ;
     ItemActivity itemActivity = new ItemActivity() ;
     ListAdaptor myAdapter;
     EditText AddListEditText;
     LinearLayout Listbackground ;
-    SQLiteDatabase mdb;
-    TodoDBHelper helper=new TodoDBHelper(this);
+    SQLiteDatabase mDb;
+    TodoDBHelper helper;
     static int idOfTodoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +56,9 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         Listbackground = (LinearLayout) findViewById(R.id.background);
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        helper=new TodoDBHelper(this);
         getAllTODO();
-        myAdapter=new ListAdaptor(todoLists,this);
+        myAdapter=new ListAdaptor(this,todoLists , this);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -76,8 +77,8 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
                 myAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
                 todoLists.remove(viewHolder.getLayoutPosition());
-                mdb=helper.getWritableDatabase();
-                TodoHandler.removeTODO(mdb,(Integer)viewHolder.itemView.getTag());
+                mDb=helper.getWritableDatabase();
+                TodoHandler.removeTODO(mDb,(Integer)viewHolder.itemView.getTag());
 
                 myAdapter.notifyDataSetChanged();
 
@@ -86,16 +87,34 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         }).attachToRecyclerView(recyclerView);
  }
 
- private void getAllTODO(){
-     mdb=helper.getReadableDatabase();
-     Cursor cursor=TodoHandler.cursor(mdb);
-     for(int i=0;i<cursor.getCount();i++){
-         cursor.moveToPosition(i);
-      String title=cursor.getString(cursor.getColumnIndex(TodoCantract.TodoEntry.TODO_NAME));
-         int id =cursor.getInt(cursor.getColumnIndex(TodoCantract.TodoEntry.TODO_ID));
-         todoLists.add(new TodoList(title,new ArrayList<TodoItem>(),id));
-     }
- }
+    private List<TodoList> getAllTODO() {
+        List<TodoList> TODOList = new ArrayList<>();
+
+
+        mDb = helper.getReadableDatabase();
+        Cursor cursor = TodoHandler.cursor(mDb);
+
+
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
+            List<TodoItem> ItemsList = new ArrayList<>();
+            String name = cursor.getString(cursor.getColumnIndex(TodoCantract.TodoEntry.TODO_NAME));
+            int id = cursor.getInt(cursor.getColumnIndex(TodoCantract.TodoEntry.TODO_ID));
+            Cursor ItemsCursor = ItemHandler.cursorItem(mDb,id);
+
+            for (int i2 = 0; i2 < ItemsCursor.getCount(); i2++) {
+                ItemsCursor.moveToPosition(i2);
+                int ItemsId = ItemsCursor.getInt(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_ID));
+                String ItemsTitle = ItemsCursor.getString(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_NAME));
+
+
+                ItemsList.add(new TodoItem(ItemsTitle,true));
+            }
+
+            TODOList.add(new TodoList( name, ItemsList,id));
+        }
+        return TODOList;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,15 +139,17 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
     public  void AddListButton (View view){
 
         if (!AddListEditText.getText().toString().equals("")) {
-            todoLists.add(new TodoList(AddListEditText.getText().toString(),new ArrayList<TodoItem>()));
+            String name=AddListEditText.getText().toString();
+            mDb = helper.getWritableDatabase();
+            int id = TodoHandler.addNewTodo(mDb, name);
+            todoLists.add(new TodoList(name,new ArrayList<TodoItem>(),id));
             myAdapter.notifyDataSetChanged();
 
-            mdb = helper.getWritableDatabase();
-            int i= TodoHandler.addNewTodo(mdb,AddListEditText.getText().toString());
+            int i= TodoHandler.addNewTodo(mDb,AddListEditText.getText().toString());
+            Log.d("hello",i+"");
 
 
          String mItemNumbers = "45";
-            //ListNumbersTextView.setText("45");
             AddListEditText.setText("");
         }
 
@@ -136,9 +157,8 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
 
     @Override
-    public void Clicked(int position) {
+    public void Clicked(int position,int id ) {
         idOfTodoList=todoLists.indexOf(position);
-
         Intent startChildActivityIntent = new Intent(this, ItemActivity.class);
         startChildActivityIntent.putExtra("position", position);
         startActivity(startChildActivityIntent);
