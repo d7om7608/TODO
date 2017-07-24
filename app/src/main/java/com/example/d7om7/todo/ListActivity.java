@@ -34,24 +34,18 @@ import static com.example.d7om7.todo.R.id.List_number_TttextView;
 import static com.example.d7om7.todo.TodoManager.todoLists;
 
 public class ListActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
-    TextView List_number_TextView;
-    TextView ListNumbersTextView ;
-    ItemActivity itemActivity = new ItemActivity() ;
-    ListAdaptor myAdapter;
+
+   static ListAdaptor myAdapter;
     EditText AddListEditText;
     LinearLayout Listbackground ;
     SQLiteDatabase mDb;
     TodoDBHelper helper;
-    static int idOfTodoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-
-
-        ListNumbersTextView = (TextView) findViewById(R.id.List_number_TttextView);
         AddListEditText=(EditText)findViewById(R.id.AddListEditText);
         Listbackground = (LinearLayout) findViewById(R.id.background);
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
@@ -59,6 +53,8 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         helper=new TodoDBHelper(this);
         getAllTODO();
         myAdapter=new ListAdaptor(this,todoLists , this);
+
+
         recyclerView.setAdapter(myAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -88,7 +84,7 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
  }
 
     private List<TodoList> getAllTODO() {
-        List<TodoList> TODOList = new ArrayList<>();
+        //List<TodoList> TODOList = new ArrayList<>();
 
 
         mDb = helper.getReadableDatabase();
@@ -111,9 +107,10 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
                 ItemsList.add(new TodoItem(ItemsTitle,true));
             }
 
-            TODOList.add(new TodoList( name, ItemsList,id));
+            todoLists.add(new TodoList( name, ItemsList,id,ItemsList.size()));
         }
-        return TODOList;
+
+        return todoLists;
     }
 
     @Override
@@ -142,14 +139,8 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
             String name=AddListEditText.getText().toString();
             mDb = helper.getWritableDatabase();
             int id = TodoHandler.addNewTodo(mDb, name);
-            todoLists.add(new TodoList(name,new ArrayList<TodoItem>(),id));
+            todoLists.add(new TodoList(name,new ArrayList<TodoItem>(),id,0));
             myAdapter.notifyDataSetChanged();
-
-            int i= TodoHandler.addNewTodo(mDb,AddListEditText.getText().toString());
-            Log.d("hello",i+"");
-
-
-         String mItemNumbers = "45";
             AddListEditText.setText("");
         }
 
@@ -158,7 +149,6 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
     @Override
     public void Clicked(int position,int id ) {
-        idOfTodoList=todoLists.indexOf(position);
         Intent startChildActivityIntent = new Intent(this, ItemActivity.class);
         startChildActivityIntent.putExtra("position", position);
         startActivity(startChildActivityIntent);
