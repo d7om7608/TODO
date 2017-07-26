@@ -16,7 +16,6 @@ import static android.media.CamcorderProfile.get;
 import static com.example.d7om7.todo.R.id.List_number_TttextView;
 
 public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
-    static TextView List_number_TextView;
 
     ViewGroup viewGroup;
     private changeActivity mCategoryHandler;
@@ -43,11 +42,12 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
 
 
 
-
+static int myposition=0;
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
+        myposition=position;
 
         holder.itemView.setTag(itemDatas.get(position).id);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +57,7 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
             }
         });
         holder.ListTextView.setText(itemDatas.get(position).title);
-        List_number_TextView.setText(""+itemDatas.get(position).size);
+        holder.List_number_TextView.setText(itemDatas.get(position).items.size()+"");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +74,7 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView ListTextView;
+        public TextView List_number_TextView;
 
 
         public ViewHolder(View itemLayout) {

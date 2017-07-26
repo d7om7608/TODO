@@ -20,6 +20,7 @@ public static final class ItemEntry {
     public static final String ITEM_NAME = "ItemName";
     public static final String TODO_CONECT_ID = "TodoId";
     public static final String TIME_STAMP="Timestamp";
+    public static final String TIME_CHECK="CheckBox";
 
 }
 

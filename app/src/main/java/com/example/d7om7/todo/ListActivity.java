@@ -1,5 +1,6 @@
 package com.example.d7om7.todo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,6 +30,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 import static android.R.attr.settingsActivity;
+import static android.R.attr.start;
 import static com.example.d7om7.todo.ItemActivity.ItemNumbers;
 import static com.example.d7om7.todo.R.id.List_number_TttextView;
 import static com.example.d7om7.todo.TodoManager.todoLists;
@@ -51,6 +53,7 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.rv_numbers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         helper=new TodoDBHelper(this);
+        if (todoLists.size()==0)
         getAllTODO();
         myAdapter=new ListAdaptor(this,todoLists , this);
 
@@ -82,9 +85,15 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
         }).attachToRecyclerView(recyclerView);
  }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        myAdapter.notifyDataSetChanged();
+    }
 
     private List<TodoList> getAllTODO() {
         //List<TodoList> TODOList = new ArrayList<>();
+
 
 
         mDb = helper.getReadableDatabase();
@@ -102,14 +111,13 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
                 ItemsCursor.moveToPosition(i2);
                 int ItemsId = ItemsCursor.getInt(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_ID));
                 String ItemsTitle = ItemsCursor.getString(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_NAME));
-
-
-                ItemsList.add(new TodoItem(ItemsTitle,true));
+                boolean bol =ItemsCursor.getInt(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.TIME_CHECK))>0;
+                Log.d("hello",bol+"");
+                ItemsList.add(new TodoItem(ItemsTitle,bol,ItemsId));
             }
 
             todoLists.add(new TodoList( name, ItemsList,id,ItemsList.size()));
         }
-
         return todoLists;
     }
 
@@ -145,15 +153,29 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         }
 
    }
-
+static final int s=1;
 
     @Override
     public void Clicked(int position,int id ) {
         Intent startChildActivityIntent = new Intent(this, ItemActivity.class);
         startChildActivityIntent.putExtra("position", position);
-        startActivity(startChildActivityIntent);
+        startActivityForResult(startChildActivityIntent,s);
+      //  startActivity(startChildActivityIntent);
+
+    }
 
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == s && resultCode == Activity.RESULT_OK) {
+              myAdapter.notifyDataSetChanged();
+
+//            if (resultCode == Activity.RESULT_CANCELED) {
+//                //Write your code if there's no result
+//            }
+        }
     }
 
 }
