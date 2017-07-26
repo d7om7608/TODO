@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     LinearLayout Settingsbackground;
     Spinner BackGroundColorSpinner ;
     Spinner FontSpinner;
-     int color;
+     int Gcolor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     }
 
     public void save_settings (View view){
-        colorSpinner(Settingsbackground);
+        colorSpinner(Settingsbackground ,Gcolor);
 
         Toast.makeText(getApplicationContext(), "Settings Saved", Toast.LENGTH_LONG).show();
     }
@@ -77,7 +77,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
 
 
-    public void colorSpinner (LinearLayout background){
+    public void colorSpinner (LinearLayout background , int color){
 
         if (BackGroundColorSpinner.getSelectedItem()== "White"){
             color = getResources().getColor(R.color.White);
@@ -112,7 +112,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
 
 
-
+        Gcolor = color;
     }
 
     @Override

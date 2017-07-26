@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
     private changeActivity mCategoryHandler;
     private List<TodoList> itemDatas;
     private Context change ;
+
+
     public ListAdaptor(Context context, List<TodoList> list, changeActivity handler) {
         this.itemDatas = list;
         change = context;
