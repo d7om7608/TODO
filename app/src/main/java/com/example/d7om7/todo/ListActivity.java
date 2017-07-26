@@ -177,23 +177,23 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
-            startActivity(startSettingsActivity);
-            return true;
-
-        }
-        return super.onOptionsItemSelected(item);
+//        int id = item.getItemId();
+//        if (id == R.id.action_settings) {
+//            Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
+//            startActivity(startSettingsActivity);
+//            return true;
+//
+//        }
+//        return super.onOptionsItemSelected(item);
 
 //        return super.onOptionsItemSelected(item);
-//        switch (item.getItemId()) {
-//            case R.id.log_out:
-//                AuthUI.getInstance().signOut(this);
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
+        switch (item.getItemId()) {
+            case R.id.log_out:
+                AuthUI.getInstance().signOut(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 

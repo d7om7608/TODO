@@ -20,11 +20,6 @@
         </activity>
         <activity android:name=".ItemActivity"
                   android:label="TODO Items"/>
-        <activity
-
-            android:name=".SettingsActivity"
-            android:label="@string/action_settings"
-            android:parentActivityName=".ListActivity"></activity>
     </application>
 
 </manifest>
