@@ -10,8 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ListActivity"
+<<<<<<< HEAD
             android:label="TODO List"
             android:launchMode="singleTop">
+=======
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+>>>>>>> 47c5988130203f72c69751b994dc7ec0158804d7
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

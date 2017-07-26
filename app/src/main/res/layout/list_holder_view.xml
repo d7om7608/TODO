@@ -21,7 +21,7 @@
 
     <TextView
         android:padding="10dp"
-        android:text="dffv"
+        android:text="0"
         android:textColor="#311B92"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

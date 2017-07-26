@@ -9,16 +9,18 @@ import java.util.List;
 public class TodoList {
     public String title;
     public List<TodoItem>items;
+    public int size;
     public int id;
 //    public TodoList(String title, List<TodoItem>items){
 //        this.title=title;
 //        this.items=items;
 //
 //    }
-    public TodoList(String title, List<TodoItem>items,int id){
+    public TodoList(String title, List<TodoItem>items,int id,int size){
         this.title=title;
         this.items=items;
         this.id=id;
+        this.size=size;
 
     }
 

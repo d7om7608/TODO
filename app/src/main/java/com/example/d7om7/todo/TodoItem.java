@@ -13,7 +13,7 @@ public class TodoItem {
 //        title=s;
 //        check=b;
 //    }
-   public TodoItem(String s, boolean b){
+   public TodoItem(String s, boolean b,int Itemid){
         title=s;
         check=b;
         this.id=id;

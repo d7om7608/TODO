@@ -18,7 +18,8 @@ import static android.media.CamcorderProfile.get;
 import static com.example.d7om7.todo.R.id.List_number_TttextView;
 
 public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
-   TextView List_number_TextView;
+
+    ViewGroup viewGroup;
     private changeActivity mCategoryHandler;
     private List<TodoList> itemDatas;
     private Context change ;
@@ -36,18 +37,21 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        viewGroup=parent;
         View itemLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_holder_view, null);
         ViewHolder viewHolder = new ViewHolder(itemLayout);
-        List_number_TextView= (TextView)itemLayout.findViewById(R.id.List_number_TttextView);
-        List_number_TextView.setText("0"+" / "+"0" );
+
         return viewHolder;
     }
 
 
 
+static int myposition=0;
+
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
+        myposition=position;
 
         holder.itemView.setTag(itemDatas.get(position).id);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +60,8 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
                 mCategoryHandler.Clicked(position, id);
             }
         });
-
         holder.ListTextView.setText(itemDatas.get(position).title);
+        holder.List_number_TextView.setText(itemDatas.get(position).items.size()+"");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +78,14 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView ListTextView;
+        public TextView List_number_TextView;
+
 
         public ViewHolder(View itemLayout) {
             super(itemLayout);
             ListTextView = (TextView) itemLayout.findViewById(R.id.list_textview);
+            List_number_TextView= (TextView)itemLayout.findViewById(R.id.List_number_TttextView);
+
         }
     }
 }
