@@ -15,6 +15,7 @@ import java.util.List;
 
 import static android.R.attr.id;
 import static android.media.CamcorderProfile.get;
+import static android.os.Build.VERSION_CODES.M;
 import static com.example.d7om7.todo.R.id.List_number_TttextView;
 
 public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
@@ -22,6 +23,8 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
     ViewGroup viewGroup;
     private changeActivity mCategoryHandler;
     private List<TodoList> itemDatas;
+     List<TodoItem> itemtodo;
+
     private Context change ;
 
 
@@ -41,15 +44,24 @@ public class ListAdaptor extends RecyclerView.Adapter<ListAdaptor.ViewHolder> {
         View itemLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_holder_view, null);
         ViewHolder viewHolder = new ViewHolder(itemLayout);
 
+
+
+
+
+
         return viewHolder;
     }
 
 
 
 static int myposition=0;
-
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+     itemtodo=itemDatas.get(position).items;
+
+
+
+
 
         myposition=position;
 
@@ -61,7 +73,8 @@ static int myposition=0;
             }
         });
         holder.ListTextView.setText(itemDatas.get(position).title);
-        holder.List_number_TextView.setText(itemDatas.get(position).items.size()+"");
+
+        holder.List_number_TextView.setText(itemDatas.get(position).items.size()+" / "+itemDatas.get(position).counterCheck);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

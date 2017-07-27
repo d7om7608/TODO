@@ -42,7 +42,6 @@ import static com.example.d7om7.todo.TodoManager.todoLists;
 public class ItemActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
     EditText AddItemEditText ;
     CheckBox checkbox;
-    static int counter=0;
     int position;
     SQLiteDatabase mdb;
     TodoDBHelper helper=new TodoDBHelper(this);
@@ -91,12 +90,16 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
                 ItmemyAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
                 todoLists.get(position).items.remove(viewHolder.getLayoutPosition());
                 mdb=helper.getWritableDatabase();
+
+
                 checkbox=(CheckBox) viewHolder.itemView.findViewById(R.id.checkBox);
                 ItemHandler.removeItem(mdb,(Integer)viewHolder.itemView.getTag());
 
                 // Log.d("Number of Rows that have been removed",((Integer)viewHolder.itemView.getTag())+"");
                 //Log.d("Number of Rows that have been removed",ItemHandler.removeItem(mdb,(Integer)viewHolder.itemView.getTag())+"");
 
+                if (checkbox.isChecked())
+                    todoLists.get(position).counterCheck--;
 
 
 
@@ -117,7 +120,7 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
                 ItmemyAdapter.notifyDataSetChanged();
                 AddItemEditText.setText("");
 
-                setResult(Activity.RESULT_OK, getIntent());
+              //  setResult(Activity.RESULT_OK, getIntent());
             }
 
     }
@@ -147,29 +150,19 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
 
 
         if (checkbox.isChecked()){
-            counter++;
-
+       todoLists.get(position).counterCheck++;
             mdb = helper.getWritableDatabase();
 
             ItemHandler.updateItem(mdb,ItemsId,true,todoid);
 
       }else{
-            counter--;
+            todoLists.get(position).counterCheck--;
 
             mdb = helper.getWritableDatabase();
 
             ItemHandler.updateItem(mdb,ItemsId,false,todoid);
 
        }
-
-
-
-
-
-
-
-
-
 
     }
 }

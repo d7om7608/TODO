@@ -88,9 +88,8 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         helper=new TodoDBHelper(this);
-        if (todoLists.size()==0)
-            getAllTODO();
-        myAdapter=new ListAdaptor(this,todoLists , this);
+
+            myAdapter = new ListAdaptor(this, todoLists, this);
 
 
         recyclerView.setAdapter(myAdapter);
@@ -145,19 +144,28 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
     @Override
     protected void onResume() {
+
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthListener);
+        if (todoLists.isEmpty()) {
+            getAllTODO();
+        }
         myAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mFirebaseAuth.removeAuthStateListener(mAuthListener);
+             mFirebaseAuth.removeAuthStateListener(mAuthListener);
+        if (todoLists.isEmpty()) {
+            getAllTODO();
+        }
+        myAdapter.notifyDataSetChanged();
+
     }
 
     private List<TodoList> getAllTODO() {
-        //List<TodoList> TODOList = new ArrayList<>();
 
 
 
@@ -166,6 +174,7 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
 
         for (int i = 0; i < cursor.getCount(); i++) {
+            int count=0;
             cursor.moveToPosition(i);
             List<TodoItem> ItemsList = new ArrayList<>();
             String name = cursor.getString(cursor.getColumnIndex(TodoCantract.TodoEntry.TODO_NAME));
@@ -173,15 +182,18 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
             Cursor ItemsCursor = ItemHandler.cursorItem(mDb, id);
 
             for (int i2 = 0; i2 < ItemsCursor.getCount(); i2++) {
+
                 ItemsCursor.moveToPosition(i2);
                 int ItemsId = ItemsCursor.getInt(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_ID));
                 String ItemsTitle = ItemsCursor.getString(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_NAME));
 
                 boolean bol =ItemsCursor.getInt(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.TIME_CHECK))>0;
+                if (bol==true)
+                    count++;
                 ItemsList.add(new TodoItem(ItemsTitle,bol,ItemsId));
             }
 
-            todoLists.add(new TodoList( name, ItemsList,id,ItemsList.size()));
+            todoLists.add(new TodoList( name, ItemsList,id,ItemsList.size(),count));
         }
         return todoLists;
     }
@@ -196,16 +208,7 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
-//            startActivity(startSettingsActivity);
-//            return true;
-//
-//        }
-//        return super.onOptionsItemSelected(item);
 
-//        return super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.log_out:
                 AuthUI.getInstance().signOut(this);
@@ -226,7 +229,7 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
 
 
-            todoLists.add(new TodoList(name,new ArrayList<TodoItem>(),id,0));
+            todoLists.add(new TodoList(name,new ArrayList<TodoItem>(),id,0,0));
 
             myAdapter.notifyDataSetChanged();
 

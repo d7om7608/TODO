@@ -9,7 +9,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import java.util.List;
 
-import static com.example.d7om7.todo.ItemActivity.counter;
 
 
 public class ItemAdaptor  extends RecyclerView.Adapter<ItemAdaptor.ViewHolder> {
@@ -24,11 +23,13 @@ public class ItemAdaptor  extends RecyclerView.Adapter<ItemAdaptor.ViewHolder> {
         View itemLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_holder_view, null);
         ViewHolder viewHolder = new ViewHolder(itemLayout);
 
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         holder.textView.setText(itemDatas.get(position).title);
         if (itemDatas.get(position).check==true){
             holder.checkBox.setChecked(true);
@@ -36,7 +37,7 @@ public class ItemAdaptor  extends RecyclerView.Adapter<ItemAdaptor.ViewHolder> {
             holder.checkBox.setChecked(false);
         }
         holder.checkBox.setTag(position);
-        holder.itemView.setTag(itemDatas.get(position).Itemid+" / "+counter);
+        holder.itemView.setTag(itemDatas.get(position).Itemid);
 
     }
 
