@@ -39,7 +39,15 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
+
+import static android.R.attr.data;
+import static android.R.attr.id;
+import static android.R.attr.settingsActivity;
+import static android.R.attr.start;
+import static com.example.d7om7.todo.ItemActivity.ItemNumbers;
+import static com.example.d7om7.todo.R.id.List_number_TttextView;
+import static com.example.d7om7.todo.TodoManager.todoLists;
+
 
 import static com.example.d7om7.todo.TodoManager.todoLists;
 
@@ -47,23 +55,13 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
     TextView List_number_TextView;
     TextView ListNumbersTextView;
     ItemActivity itemActivity = new ItemActivity();
-    ListAdaptor myAdapter;
-=======
-import static android.R.attr.settingsActivity;
-import static android.R.attr.start;
-import static com.example.d7om7.todo.ItemActivity.ItemNumbers;
-import static com.example.d7om7.todo.R.id.List_number_TttextView;
-import static com.example.d7om7.todo.TodoManager.todoLists;
+    static ListAdaptor myAdapter;
 
-public class ListActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
 
-   static ListAdaptor myAdapter;
->>>>>>> 47c5988130203f72c69751b994dc7ec0158804d7
     EditText AddListEditText;
     LinearLayout Listbackground;
     SQLiteDatabase mDb;
     TodoDBHelper helper;
-<<<<<<< HEAD
     static int idOfTodoList;
     public static final int RC_SIGN_IN = 1;
 
@@ -72,38 +70,29 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
-=======
->>>>>>> 47c5988130203f72c69751b994dc7ec0158804d7
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-<<<<<<< HEAD
         mFirebaseAuth = FirebaseAuth.getInstance();
 
 
         ListNumbersTextView = (TextView) findViewById(R.id.List_number_TttextView);
         AddListEditText = (EditText) findViewById(R.id.AddListEditText);
-=======
-        AddListEditText=(EditText)findViewById(R.id.AddListEditText);
->>>>>>> 47c5988130203f72c69751b994dc7ec0158804d7
+
         Listbackground = (LinearLayout) findViewById(R.id.background);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_numbers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-<<<<<<< HEAD
-        helper = new TodoDBHelper(this);
-        getAllTODO();
-        myAdapter = new ListAdaptor(this, todoLists, this);
-=======
+
         helper=new TodoDBHelper(this);
         if (todoLists.size()==0)
-        getAllTODO();
+            getAllTODO();
         myAdapter=new ListAdaptor(this,todoLists , this);
 
 
->>>>>>> 47c5988130203f72c69751b994dc7ec0158804d7
         recyclerView.setAdapter(myAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -129,7 +118,6 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
             }
 
         }).attachToRecyclerView(recyclerView);
-<<<<<<< HEAD
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -159,20 +147,13 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
     protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthListener);
+        myAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mFirebaseAuth.removeAuthStateListener(mAuthListener);
-
-=======
- }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        myAdapter.notifyDataSetChanged();
->>>>>>> 47c5988130203f72c69751b994dc7ec0158804d7
     }
 
     private List<TodoList> getAllTODO() {
@@ -195,21 +176,12 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
                 ItemsCursor.moveToPosition(i2);
                 int ItemsId = ItemsCursor.getInt(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_ID));
                 String ItemsTitle = ItemsCursor.getString(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.ITEM_NAME));
-<<<<<<< HEAD
 
-
-                ItemsList.add(new TodoItem(ItemsTitle, true));
-            }
-
-            TODOList.add(new TodoList(name, ItemsList, id));
-=======
                 boolean bol =ItemsCursor.getInt(ItemsCursor.getColumnIndex(TodoCantract.ItemEntry.TIME_CHECK))>0;
-                Log.d("hello",bol+"");
                 ItemsList.add(new TodoItem(ItemsTitle,bol,ItemsId));
             }
 
             todoLists.add(new TodoList( name, ItemsList,id,ItemsList.size()));
->>>>>>> 47c5988130203f72c69751b994dc7ec0158804d7
         }
         return todoLists;
     }
@@ -251,15 +223,17 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
             String name = AddListEditText.getText().toString();
             mDb = helper.getWritableDatabase();
             int id = TodoHandler.addNewTodo(mDb, name);
-<<<<<<< HEAD
-            todoLists.add(new TodoList(name, new ArrayList<TodoItem>(), id));
+
+
+
+            todoLists.add(new TodoList(name,new ArrayList<TodoItem>(),id,0));
+
             myAdapter.notifyDataSetChanged();
 
-            int i = TodoHandler.addNewTodo(mDb, AddListEditText.getText().toString());
-            Log.d("hello", i + "");
+            TodoHandler.addNewTodo(mDb, AddListEditText.getText().toString());
 
 
-            String mItemNumbers = "45";
+            myAdapter.notifyDataSetChanged();
             AddListEditText.setText("");
         }
 
@@ -268,19 +242,8 @@ public class ListActivity extends AppCompatActivity implements ListAdaptor.chang
 
     @Override
     public void Clicked(int position, int id) {
+
         idOfTodoList = todoLists.indexOf(position);
-=======
-            todoLists.add(new TodoList(name,new ArrayList<TodoItem>(),id,0));
-            myAdapter.notifyDataSetChanged();
-            AddListEditText.setText("");
-        }
-
-   }
-static final int s=1;
-
-    @Override
-    public void Clicked(int position,int id ) {
->>>>>>> 47c5988130203f72c69751b994dc7ec0158804d7
         Intent startChildActivityIntent = new Intent(this, ItemActivity.class);
         startChildActivityIntent.putExtra("position", position);
         startActivityForResult(startChildActivityIntent,s);
@@ -288,6 +251,7 @@ static final int s=1;
 
     }
 
+        static final int s=1;
 
 
     @Override

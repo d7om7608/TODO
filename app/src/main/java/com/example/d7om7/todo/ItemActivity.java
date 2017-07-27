@@ -29,7 +29,6 @@ import java.util.List;
 import static android.R.attr.description;
 import static android.R.attr.name;
 import static com.example.d7om7.todo.Data.ItemHandler.updateItem;
-import static com.example.d7om7.todo.ListActivity.myAdapter;
 import static com.example.d7om7.todo.ListAdaptor.myposition;
 import static com.example.d7om7.todo.R.id.AddListEditText;
 import static com.example.d7om7.todo.R.id.checkBox;
