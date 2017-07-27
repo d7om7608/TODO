@@ -42,6 +42,7 @@ import static com.example.d7om7.todo.TodoManager.todoLists;
 public class ItemActivity extends AppCompatActivity implements ListAdaptor.changeActivity {
     EditText AddItemEditText ;
     CheckBox checkbox;
+    static int counter=0;
     int position;
     SQLiteDatabase mdb;
     TodoDBHelper helper=new TodoDBHelper(this);
@@ -146,11 +147,15 @@ public class ItemActivity extends AppCompatActivity implements ListAdaptor.chang
 
 
         if (checkbox.isChecked()){
+            counter++;
+
             mdb = helper.getWritableDatabase();
 
             ItemHandler.updateItem(mdb,ItemsId,true,todoid);
 
       }else{
+            counter--;
+
             mdb = helper.getWritableDatabase();
 
             ItemHandler.updateItem(mdb,ItemsId,false,todoid);
